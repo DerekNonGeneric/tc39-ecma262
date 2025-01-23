@@ -1,0 +1,12 @@
+[
+  "AsyncFromSyncIteratorContinuation",
+  "AsyncGeneratorYield",
+  "ClassStaticBlockBody[0,0].EvaluateClassStaticBlockBody",
+  "CompareTypedArrayElements",
+  "DoWait",
+  "FunctionBody[0,0].EvaluateFunctionBody",
+  "GetViewByteLength",
+  "INTRINSICS.Atomics.notify",
+  "Record[SourceTextModuleRecord].ExecuteModule",
+  "TypedArrayLength"
+]

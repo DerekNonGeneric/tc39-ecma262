@@ -11,16 +11,18 @@ on:
 jobs:
   build:
     name: 'check IPR form'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: ljharb/actions/node/install@56f291b2a0d9e3bce72634356ae949b1e054b9f8
-        name: 'nvm install lts/* && npm ci'
+      - uses: actions/checkout@v4
+      - uses: ljharb/actions/node/install@dfd9796898850cf07630d1bd4053a7c9a379e90f
+        name: 'nvm install lts/* && npm ci --no-audit'
+        env:
+          NPM_CONFIG_AUDIT: false
         with:
           node-version: lts/*
           use-npm-ci: true
-      - run: 'npm run ipr-check'
+      - run: npm run ipr-check ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || 'HEAD' }}
         env:
           GH_TOKEN: ${{ secrets.GH_IPR_TOKEN }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}

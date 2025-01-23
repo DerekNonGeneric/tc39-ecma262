@@ -1,14 +1,19 @@
 name: 'ecma-262'
 
-on: [pull_request, push]
+on: [pull_request]
 
 jobs:
-  build:
-    name: 'build & lint ecmarkup'
+  spellcheck:
+    name: 'check for newly-introduced spelling errors'
     runs-on: ubuntu-22.04
 
     steps:
+      - run: sudo apt-get install aspell
       - uses: actions/checkout@v4
+        with:
+          # Number of commits to fetch. 0 indicates all history for all branches and tags.
+          # Default: 1
+          fetch-depth: 0
       - uses: ljharb/actions/node/install@dfd9796898850cf07630d1bd4053a7c9a379e90f
         name: 'nvm install lts/* && npm ci --no-audit'
         env:
@@ -16,4 +21,4 @@ jobs:
         with:
           node-version: lts/*
           use-npm-ci: true
-      - run: npm run build-head
+      - run: node scripts/spellcheck.mjs origin/"${GITHUB_BASE_REF}"
